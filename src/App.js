@@ -1,7 +1,12 @@
 import React from 'react';
 import {Redirect, Route} from 'react-router-dom';
-import {IonApp, IonRouterOutlet} from '@ionic/react';
+import {IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
+import Home from './pages/Home';
+import Trending from './pages/Trending';
+import Submit from './pages/Submit';
+import Search from './pages/Search';
+import Profile from './pages/Profile';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -21,16 +26,49 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import {createOutline, listCircleOutline, personCircleOutline, searchOutline, trendingUpOutline} from "ionicons/icons";
 
 const App = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonRouterOutlet>
-          <Route exact path="/" render={() => <Redirect to="/home"/>}/>
-        </IonRouterOutlet>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route path="/" render={() => <Redirect to="/home" exact={true}/>}/>
+            <Route path="/home" component={Home}/>
+            <Route path="/trending" component={Trending}/>
+            <Route path="/submit" component={Submit}/>
+            <Route path="/search" component={Search}/>
+            <Route path="/profile" component={Profile}/>
+            <Route component={() => <Redirect to="/home"/>}/>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="home" href="/home">
+              <IonIcon icon={listCircleOutline}/>
+              <IonLabel>Hunt</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="trending" href="/trending">
+              <IonIcon icon={trendingUpOutline}/>
+              <IonLabel>Trending</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="search" href="/search">
+              <IonIcon icon={createOutline}/>
+              <IonLabel>Search</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="submit" href="/submit">
+              <IonIcon icon={searchOutline}/>
+              <IonLabel>Submit</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="profile" href="/profile">
+              <IonIcon icon={personCircleOutline}/>
+              <IonLabel>Profile</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
       </IonReactRouter>
     </IonApp>
-  );
-}
+  )
+};
+
+
 export default App;
